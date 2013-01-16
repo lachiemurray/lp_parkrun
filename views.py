@@ -1,12 +1,12 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-import dateutil
+import dateutil.parser
 import hashlib
 import json
 
 greetings = {"english" : ["Good morning", "Hello", "Good evening"], 
     "french" : ["Bonjour", "Bonjour", "Bonsoir"], 
-    "german" : ["Guten morgen", "Hallo" "Guten abend"], 
+    "german" : ["Guten morgen", "Hallo", "Guten abend"], 
     "spanish" : ["Buenos d&#237;as", "Hola", "Buenas noches"], 
     "portuguese" : ["Bom dia", "Ol&#225;", "Boa noite"], 
     "italian" : ["Buongiorno", "ciao", "Buonasera"], 
@@ -15,30 +15,32 @@ greetings = {"english" : ["Good morning", "Hello", "Good evening"],
 def edition(request):
 
     # Check for required vars
-    if not request.POST.get('local_delivery_time',False):
+    if not request.GET.get('local_delivery_time',False):
         return HttpResponse("Error: No local_delivery_time was provided", status=400)
         
-    if not request.POST.get('lang', False):
+    if not request.GET.get('lang', False):
         return HttpResponse("Error: No lang was provided", status=400)
         
-    if not request.POST.get('name', False):
+    if not request.GET.get('name', False):
         return HttpResponse("No name was provided", status=400)
 
     # Extract configuration provided by user through BERG Cloud. These options are defined by the JSON in meta.json.
-    date = dateutil.parser.parse(request.POST['local_delivery_time'])
+    date = dateutil.parser.parse(request.GET['local_delivery_time'])
     if not date.weekday() == 0:
         return HttpResponse("It is not a Monday", status=406)
     
     # Get config
-    language = request.POST['lang']
-    name = request.POST['name']
+    language = request.GET['lang']
+    name = request.GET['name']
     
     # Pick a time of day appropriate greeting
-    greeting = greetings[language][0]
+    i = 0
     if date.hour >= 12 and date.hour <=17:
-        greeting = greetings[language][1]
+        i = 1
     if (date.hour > 17 and date.hour <=24) or (date.hour >= 0 and date.hour <= 3):
-        greeting = greetings[language][2]
+        i = 2
+
+    greeting = "%s, %s" % (greetings[language][i], name)
         
     # Set the etag to be this content. This means the user will not get the same content twice, 
     # but if they reset their subscription (with, say, a different language they will get new content 
@@ -55,8 +57,8 @@ def sample(request):
     # Sample data
     language = 'english';
     name = 'Little Printer';
-    greeting = greetings[language][0]
-    
+    greeting = "%s, %s" % (greetings[language][0], name)
+ 
     # Create response
     context = {'greeting' : greeting}
     response = render(request, 'lp_hello_django/hello_world.html', context)
