@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>parkrun</title>
+  <style type="text/css">
+    body {
+      width: 384px;
+      padding: 0px;
+      margin: 0px;
+    }
+    h1 {
+      word-wrap: break-word;
+      font-family:sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+Hello {{ name }}, here is your barcode for today's parkrun at {{ parkrun }}
+
+<table cellpadding="0px" cellspacing="0px">
+  <tbody><tr>
+    <td colspan="3"><img src="https://service.parkrun.org.uk/resources/runnerSupport/top.gif"></td>
+  </tr>
+  <tr>
+    <td><img src="https://service.parkrun.org.uk/resources/runnerSupport/side.gif"></td>
+    <td width="300px" align="center" valign="middle">
+      <img src="https://service.parkrun.org.uk/resources/runnerSupport/parkrun-logo.gif" alt="parkrun"><br>
+      <img src="https://service.parkrun.org.uk/runnerSupport/BarcodeImagery/image.php?code={{ barcode }}" alt="Your barcode"><br>
+      <strong>{{ name }}</strong>
+    </td>
+    <td><img src="https://service.parkrun.org.uk/resources/runnerSupport/side.gif"></td>
+  </tr>
+  <tr>
+    <td colspan="3"><img src="https://service.parkrun.org.uk/resources/runnerSupport//bottom.gif"></td>
+  </tr>
+</tbody></table>
+
+
+</body>
+</html>

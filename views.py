@@ -7,8 +7,9 @@ import json
 
 def create_pub( request, name, barcode, parkrun, date ):
     
-    
-    response = render(request, 'lp_parkrun/edition.html')
+    context = { "name" : name, "barcode" : barcode, "parkrun" : parkrun, "date" : date }
+        
+    response = render(request, 'lp_parkrun/edition.html', context)
     response['ETag'] = hashlib.sha224(name+date).hexdigest()
     
     return response
@@ -19,7 +20,7 @@ def edition(request):
     name = "An EXAMPLE"
     barcode = "A12345"
     parkrun = "Bushy Park"
-    date = datetime.date
+    date = datetime.datetime.now().strftime("%d/%m/%Y")
 
     return create_pub( request, name, barcode, parkrun, date )
 
@@ -29,7 +30,7 @@ def sample(request):
     name = "An EXAMPLE"
     barcode = "A12345"
     parkrun = "Bushy Park"
-    date = datetime.date
+    date = datetime.datetime.now().strftime("%d/%m/%Y")
     
     return create_pub( request, name, barcode, parkrun, date )
 
