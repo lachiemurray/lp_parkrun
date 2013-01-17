@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 import dateutil.parser
 import hashlib
@@ -66,6 +67,7 @@ def sample(request):
     
     return response
 
+@csrf_exempt
 def validate_config(request):
     
     # Check that config provided
