@@ -70,14 +70,10 @@ def sample(request):
 @csrf_exempt
 def validate_config(request):
     
-    # Check that config provided
-    if not request.POST.get('config', None):
-        return HttpResponse("You did not post any config to validate",status=400)
-
     json_response = {'errors': [], 'valid': True}
 
     # Extract config from POST
-    user_settings = json.loads(request.POST['config'])
+    user_settings = json.loads(request.raw_post_data)['config']
     
     # If the user did choose a language:
     if not user_settings.get('lang', None):
@@ -95,7 +91,7 @@ def validate_config(request):
         json_response['errors'].append("We couldn't find the language you selected (%s) Please select another" % user_settings['language'])
     
     # Create response
-    response = HttpResponse(json_response, mimetype='application/json')
+    response = HttpResponse(json.dumps(json_response), mimetype='application/json')
 
     return response
 
