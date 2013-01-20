@@ -7,6 +7,7 @@ import datetime
 import hashlib
 import json
 
+from weather import Weather
 
 def create_pub( request, code ):
     
@@ -17,7 +18,11 @@ def create_pub( request, code ):
     # Get event
     event = get_object_or_404(Event, identifier=user.event_id)
     
-    context = { "user" : user, "event" : event, "weather": None }
+    weather = Weather('london')
+    weather.get_weather()
+    print weather.icon
+    print "hello"
+    context = { "user" : user, "event" : event, "weather": weather }
     
     response = render(request, 'lp_parkrun/edition.html', context)
     
@@ -56,12 +61,6 @@ def validate_config(request):
     return response
 
 
-
-
-
-
-
-
 # Alternatively, configure webserver to serve this content
 def meta_json(request):
     
@@ -71,11 +70,4 @@ def meta_json(request):
 def icon(request):
     
     return HttpResponseRedirect('/static/icon.png')
-    
-    
-    
-    
-    
-    
-    
     
