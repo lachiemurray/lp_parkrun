@@ -1,7 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
-from django.template.loader import render_to_string
 from Models import User, Event
 
 import datetime
@@ -18,10 +17,7 @@ def create_pub( request, code ):
     # Get event
     event = get_object_or_404(Event, identifier=user.event_id)
     
-    # Generate weather
-    weather = render_to_string("lp_parkrun/weather.html", { "icon":"icon.png" } )
-    
-    context = { "user" : user, "event" : event, "weather": weather }
+    context = { "user" : user, "event" : event }
     
     response = render(request, 'lp_parkrun/edition.html', context)
     
