@@ -1,24 +1,119 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+{% load humanize %}
 <html>
 <head>
   <title>parkrun</title>
   <style type="text/css">
-    body {
+    body 
+    {
       width: 384px;
       padding: 0px;
       margin: 0px;
     }
-    h1 {
+    
+    h1 
+    {
       word-wrap: break-word;
-      font-family:sans-serif;
+      font-family: Arial, sans-serif;
+    }
+    
+    div.cutout
+    {
+       border-top: 2px dashed;
+       border-bottom: 2px dashed;	
+       margin: 10px auto 10px auto;
+       padding-top: 10px;
+       padding-bottom: 10px;
+    }
+    
+    table.barcode
+    {
+       margin: 0px auto 0px auto;
+    }
+    
+    div.header
+    {
+       border-top: 5px solid;
+       border-bottom: 2px solid;
+       text-align:center;
+       padding: 10px;
+    }   
+    div.header_left
+    {
+       position: relative;
+       float: left;
+       text-align: left;
+       font-weight: bold;
+       height: 85px;
+       margin-left: 5px;
+       margin-right: 5px;
+    }
+    div.header_right
+    {
+       position: relative;
+       float: right;
+       text-align: right;
+       font-weight: bold;
+       width: 50%;
+       height: 85px;
+       margin-left: 5px;
+       margin-right: 5px;
+    }
+    div.event_name
+    {
+       text-align: right;
+       margin-top: -5px;
+       padding-right: 0px;
+       font-size: 18px;
+    }
+    div.summary
+    {
+       padding: 10px;
+       text-align: justify;
+    }
+    #event_number
+    {  
+       font-size: 32px;
+       position:absolute; top:0px; right: 0px;
+    }
+    #date
+    {  
+       font-size: 22px;
+       position:absolute; bottom:0px; right: 0px;
     }
   </style>
 </head>
 <body>
 
-Hello {{ name }}, here is your barcode for today's parkrun at {{ parkrun }}
 
-<table cellpadding="0px" cellspacing="0px">
+<!-- header -->
+<div class="header">
+    <div class="header_left">
+        <img src="/static/parkrun_logo.jpg" width="150px"></img>
+        <div class="event_name">{{event.short_name|lower}}</div>
+    </div>
+    <div class="header_right">
+        <div id="event_number">#{{ event.number }}</div>
+        <div id="date">19/10/01</div>
+    </div>
+    <div style="clear:both;"></div>
+</div>
+
+<!-- summary -->
+<div class="summary">
+Hello {{ user.first_names }}, here is your barcode for today's parkrun at {{ event.full_name }}. This will be your {{ user.event_runs|ordinal }} run at {{ event.full_name }} and your {{ user.total_runs|ordinal }} overall. Good luck!
+</div>
+
+<!-- twitter -->
+<div class="twitter"></div>
+
+<!-- weather -->
+<div class="weather"></div>
+
+<!-- barcode -->
+<div class="cutout">
+barcode
+<!--table class="barcode" cellpadding="0px" cellspacing="0px">
   <tbody><tr>
     <td colspan="3"><img src="https://service.parkrun.org.uk/resources/runnerSupport/top.gif"></td>
   </tr>
@@ -26,16 +121,19 @@ Hello {{ name }}, here is your barcode for today's parkrun at {{ parkrun }}
     <td><img src="https://service.parkrun.org.uk/resources/runnerSupport/side.gif"></td>
     <td width="300px" align="center" valign="middle">
       <img src="https://service.parkrun.org.uk/resources/runnerSupport/parkrun-logo.gif" alt="parkrun"><br>
-      <img src="https://service.parkrun.org.uk/runnerSupport/BarcodeImagery/image.php?code={{ barcode }}" alt="Your barcode"><br>
-      <strong>{{ name }}</strong>
+      <img src="https://service.parkrun.org.uk/runnerSupport/BarcodeImagery/image.php?code=A{{ user.barcode }}" alt="Your barcode"><br>
+      <strong> {{ user.first_names }} {{ user.last_names|upper}}</strong>
     </td>
     <td><img src="https://service.parkrun.org.uk/resources/runnerSupport/side.gif"></td>
   </tr>
   <tr>
     <td colspan="3"><img src="https://service.parkrun.org.uk/resources/runnerSupport//bottom.gif"></td>
   </tr>
-</tbody></table>
+</tbody>
+</table-->
+</div>
 
+<!-- footer image -->
 
 </body>
 </html>
