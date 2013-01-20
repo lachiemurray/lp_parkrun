@@ -1,51 +1,35 @@
 {
-    "owner_email" : "publishers@bergcloud.com",
+    "owner_email" : "lachie.murray@gmail.com",
     "publication_api_version":"1.0",
-    "name": "Hello, World!",
-    "description": "Example publication for Little Printer",
-    "delivered_on": "every Monday",
-    "send_timezone_info": true,
+    "name": "parkrun",
+    "description": "Provides a fresh barcode and up-to-date news and weather reports for your local parkrun.",
+    "delivered_on": "every Saturday",
+    "send_timezone_info": false,
     "send_delivery_count": false,
     "external_configuration": false,
     "config" : {
       "fields": [
           {
               "type": "text",
-              "name": "name",
-              "label": "Enter your name"
+              "name": "barcode",
+              "label": "Enter your barcode number"
           },
           {
               "type": "select",
-              "name": "lang",
-              "label": "Select your greeting language",
+              "name": "event",
+              "label": "Select your local parkrun",
               "options": [
                   [
-                      "English",
-                      "english"
+                      "Mile End",
+                      "mileend"
                   ],
                   [
-                      "French",
-                      "french"
+                      "York",
+                      "york"
                   ],
                   [
-                      "German",
-                      "german"
-                  ],
-                  [
-                      "Spanish",
-                      "spanish"
-                  ],
-                  [
-                      "Portuguese",
-                      "portuguese"
-                  ],
-                  [
-                      "Italian",
-                      "italian"
-                  ],
-                  [
-                      "Swedish",
-                      "swedish"
+                      "Bushy Park",
+                      "bushy"
                   ]
               ]
           }
