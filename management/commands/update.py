@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError 
 from lp_parkrun.models import User, Event
 
-from lp_parkrun.tools import * 
+from lp_parkrun.scraper import * 
 
 class Command(BaseCommand): 
     
@@ -10,11 +10,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options): 
 
         # Scrape for new parkruns 
-        self.stdout.write('Looking for new parkruns...\n')
-    
-    
-    
-        events = ['mileend', 'york', 'bushy', 'harrogate']
+        events = ScrapeEvents()
+        
         for e in events:
     	       if not Event.objects.filter(identifier=e).exists():
                  AddEvent(e)
