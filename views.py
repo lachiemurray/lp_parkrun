@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
-from Models import User, Event
+from models import User, Event
 
 import datetime
 import hashlib
@@ -17,7 +17,7 @@ def create_pub( request, code ):
     # Get event
     event = get_object_or_404(Event, identifier=user.event_id)
     
-    context = { "user" : user, "event" : event }
+    context = { "user" : user, "event" : event, "weather": None }
     
     response = render(request, 'lp_parkrun/edition.html', context)
     

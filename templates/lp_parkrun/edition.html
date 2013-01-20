@@ -109,7 +109,7 @@ Hello {{ user.first_names }}, here is your barcode for today's parkrun at {{ eve
 
 <!-- weather -->
 {% if event.postcode %}
-{% include "lp_parkrun/weather.html" %} <!-- with "icon"=weather.icon -->
+{% include "lp_parkrun/weather.html" with weather=weather %}
 {% endif %}
 
 <!-- barcode -->
