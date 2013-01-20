@@ -1,3 +1,36 @@
-<img src="/static/weather_icons/{{ weather.icon }}.png">
-{{ weather.forecast_string }}
-{{ weather.temperature }}
+<style>
+.forecast {
+  font-size:18px;
+  line-height:1em;
+  float:left;
+  margin-top:20px;
+  width:329px;
+
+}
+#icon {
+ margin-bottom: -13px;
+ float:left;
+ margin-right:5px;
+}
+#weather-icon {
+  margin-top:5px;
+}
+
+#weather-container {
+  background:url(/static/grey_bar.png) no-repeat;
+  padding-top:5px;
+  min-height:50px;
+  overflow: hidden;
+}
+
+.grey-strip {
+  background:url(/static/grey_bar.png) no-repeat;
+  height:15px;
+  width:384px;
+}
+</style>
+<div id='weather-container'>
+  <div id='icon'><img src="/static/weather_icons/{{ weather.icon }}.png"></div>
+  <div class="forecast"> {{ weather.forecast_string.upper }} &bull; {{ weather.temperature }}&deg;C</div>
+</div>
+<div class='grey-strip'></div>
