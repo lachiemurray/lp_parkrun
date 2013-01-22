@@ -9,12 +9,12 @@
       width: 384px;
       padding: 0px;
       margin: 0px;
+      font-family: arial, sans-serif;
     }
     
     h1 
     {
       word-wrap: break-word;
-      font-family: Arial, sans-serif;
     }
     
     div.cutout
@@ -90,7 +90,7 @@
 <div class="header">
     <div class="header_left">
         <img src="/static/parkrun_logo.jpg" width="150px"></img>
-        <div class="event_name">{{event.short_name|lower}}</div>
+        <div class="event_name">{{event.name|lower}}</div>
     </div>
     <div class="header_right">
         <div id="event_number">#{{ event.number }}</div>
@@ -101,7 +101,7 @@
 
 <!-- summary -->
 <div class="summary">
-Hello {{ user.first_names }}, here is your barcode for today's parkrun at {{ event.full_name }}. This will be your {{ user.event_runs|ordinal }} run at {{ event.full_name }} and your {{ user.total_runs|ordinal }} overall. Good luck!
+Hello {{ user.first_names }}, here is your barcode for today's parkrun at {{ event.name }}. This will be your {{ user.event_runs|ordinal }} run at {{ event.name }} and your {{ user.total_runs|ordinal }} overall. Good luck!
 </div>
 
 <!-- twitter -->
