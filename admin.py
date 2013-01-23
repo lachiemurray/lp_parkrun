@@ -6,7 +6,7 @@ class UserAdmin(admin.ModelAdmin):
     list_display = ('first_names', 'last_names', 'barcode')
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('name', 'identifier', 'number','has_twitter_id', 'has_postcode')
+    list_display = ('name', 'identifier', 'number','has_twitter_id', 'has_postcode', 'twitter')
 
 
 admin.site.register(Event,EventAdmin)

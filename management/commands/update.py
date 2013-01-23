@@ -1,7 +1,6 @@
-from django.core.management.base import BaseCommand, CommandError 
+from django.core.management.base import BaseCommand 
 from lp_parkrun.models import User, Event
-import urllib2
-import re
+from lp_parkrun.scraper import Scraper
 
 class Command(BaseCommand): 
     
@@ -9,50 +8,86 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options): 
 
+        self.s = Scraper()
+
         # Scrape for new parkruns 
-        events = ScrapeEvents()
-            
+        events = self.s.scrape_event_ids()
+
         for e in events:
             if not Event.objects.filter(identifier=e).exists():
-                # Add new event
-                try:
-                    event = Event(identifier=e)
-                    event.scrape_event_data()
-                    event.save()
-                    
-                    # Add to meta.json
-                except:
-                    print "Problem adding %s to database" % e
-
+                self.add_event(self.s,e)
+                
         # Update events
         self.stdout.write('Updating parkruns...\n')
-        for e in Event.objects.all():
-            e.scrape_event_data()
-            e.save()
-    
+        for event in Event.objects.all():
+            self.update_event(event)
+            
         # Update users
         self.stdout.write('Updating users...\n')
         for u in User.objects.all():
-            u.scrape_user_data()
-            #u.save()
+            self.update_user(u)
         
         self.stdout.write('Done.\n')
         
         
-# Scrape parkrun website and return a list of all parkrun events
-def ScrapeEvents():
-
-    user_agent = "Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11"
-    event_pattern = '<a href="http:\/\/www.parkrun.org.uk\/([a-zA-Z\-]*)\/results">'
-
-    print 'Looking for new parkruns...'  
-    
-    request = urllib2.Request("http://www.parkrun.org.uk/results/attendancerecords/")
-    request.add_header("User-Agent", user_agent)
-    
-    f = urllib2.urlopen(request)
-    events_page = f.read()
+    # Add a new parkrun
+    def add_event(self,s,e):    
         
-    events = re.findall(event_pattern, events_page)
-      
-    return events
+        # Add new event                    
+        event = Event(identifier=e)
+        
+        data = s.scrape_event_data(e)
+        
+        if data.has_key('name'):
+            event.name = data['name']
+        else:
+            print "Name of event '%s' could not be determined" % e
+            return
+            
+        if data.has_key('number'):
+            event.number = data['number']
+        else:
+            print "Number of runs at '%s' could not be determined" % e
+            return
+        
+        event.save()
+        
+        # TODO: Add to meta.json
+    
+    # Update the data of an existing parkrun
+    def update_event(self,event):
+        
+        data = self.s.scrape_event_data(event.identifier)
+        
+        if data.has_key('number'):
+            event.number = data['number']
+        else:
+            print "Number of runs at '%s' could not be determined" % event.identifier
+            return
+            
+        if not event.postcode:
+            event.postcode = self.s.get_event_postcode(event.identifier) or ''
+        
+        if not event.twitter:
+            event.twitter = self.s.get_twitter_id(event.identifier) or ''
+        
+        event.save()
+        
+    # Update the data of an existing user
+    def update_user(self,user):
+        
+        data = self.s.scrape_user_data(user.barcode,user.event_id)
+        
+        if data.has_key('total_runs'):
+            user.total_runs = data['total_runs']
+            
+        if data.has_key('event_runs'):
+            user.event_runs = data['event_runs']
+         
+        if data.has_key('pb'):
+            user.pb = data['pb']
+        
+        user.save()
+
+        
+    
