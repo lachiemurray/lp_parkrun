@@ -5,7 +5,6 @@
   float:left;
   margin-top:20px;
   width:329px;
-
 }
 #icon {
  margin-bottom: -13px;
@@ -31,6 +30,6 @@
 </style>
 <div id='weather-container'>
   <div id='icon'><img src="/static/weather_icons/{{ weather.icon }}.png"></div>
-  <div class="forecast"> {{ weather.forecast_string.upper }} &bull; {{ weather.temperature }}&deg;C</div>
+  <div class="forecast"> {{ weather.text|upper }} &bull; {{ weather.temp }}&deg;C</div>
 </div>
 <div class='grey-strip'></div>

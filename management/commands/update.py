@@ -11,7 +11,7 @@ class Command(BaseCommand):
         self.s = Scraper()
 
         # Scrape for new parkruns 
-        events = self.s.scrape_event_ids()
+        '''events = self.s.scrape_event_ids()
 
         for e in events:
             if not Event.objects.filter(identifier=e).exists():
@@ -20,7 +20,7 @@ class Command(BaseCommand):
         # Update events
         self.stdout.write('Updating parkruns...\n')
         for event in Event.objects.all():
-            self.update_event(event)
+            self.update_event(event)'''
             
         # Update users
         self.stdout.write('Updating users...\n')
