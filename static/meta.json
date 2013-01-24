@@ -1,38 +1,666 @@
 {
-    "owner_email" : "lachie.murray@gmail.com",
-    "publication_api_version":"1.0",
-    "name": "parkrun",
-    "description": "Provides a fresh barcode and up-to-date news and weather reports for your local parkrun.",
-    "delivered_on": "every Saturday",
-    "send_timezone_info": false,
-    "send_delivery_count": false,
-    "external_configuration": false,
-    "config" : {
-      "fields": [
-          {
-              "type": "text",
-              "name": "barcode",
-              "label": "Enter your barcode number"
-          },
-          {
-              "type": "select",
-              "name": "event",
-              "label": "Select your local parkrun",
-              "options": [
-                  [
-                      "Mile End",
-                      "mileend"
-                  ],
-                  [
-                      "York",
-                      "york"
-                  ],
-                  [
-                      "Bushy Park",
-                      "bushy"
-                  ]
-              ]
-          }
-      ]
-    }
+    "send_timezone_info": false, 
+    "name": "parkrun", 
+    "publication_api_version": "1.0", 
+    "owner_email": "lachie.murray@gmail.com", 
+    "delivered_on": "every Saturday", 
+    "send_delivery_count": false, 
+    "external_configuration": false, 
+    "config": {
+        "fields": [
+            {
+                "type": "text", 
+                "name": "barcode", 
+                "label": "Enter your barcode number"
+            }, 
+            {
+                "type": "select", 
+                "options": [
+                    [
+                        "Aberdeen", 
+                        "aberdeen"
+                    ], 
+                    [
+                        "Aberystwyth", 
+                        "aberystwyth"
+                    ], 
+                    [
+                        "Abingdon", 
+                        "Abingdon"
+                    ], 
+                    [
+                        "Albert", 
+                        "albert"
+                    ], 
+                    [
+                        "Alice Holt", 
+                        "aliceholt"
+                    ], 
+                    [
+                        "Ally Pally", 
+                        "allypally"
+                    ], 
+                    [
+                        "Andover", 
+                        "andover"
+                    ], 
+                    [
+                        "Arrow Valley", 
+                        "arrowvalley"
+                    ], 
+                    [
+                        "Ashton Court", 
+                        "ashton-court"
+                    ], 
+                    [
+                        "Banstead Woods", 
+                        "banstead"
+                    ], 
+                    [
+                        "Barking", 
+                        "barking"
+                    ], 
+                    [
+                        "Barnsley", 
+                        "Barnsley"
+                    ], 
+                    [
+                        "Barnstaple", 
+                        "barnstaple"
+                    ], 
+                    [
+                        "Barrow", 
+                        "barrow"
+                    ], 
+                    [
+                        "Basingstoke", 
+                        "basingstoke"
+                    ], 
+                    [
+                        "Beckton", 
+                        "beckton"
+                    ], 
+                    [
+                        "Bedfont Lakes", 
+                        "bedfont"
+                    ], 
+                    [
+                        "Bedford", 
+                        "bedford"
+                    ], 
+                    [
+                        "Belfast Victoria", 
+                        "belfastVictoria"
+                    ], 
+                    [
+                        "Bexley", 
+                        "bexley"
+                    ], 
+                    [
+                        "Black Park", 
+                        "black-park"
+                    ], 
+                    [
+                        "Bolton", 
+                        "Bolton"
+                    ], 
+                    [
+                        "Bradford", 
+                        "bradford"
+                    ], 
+                    [
+                        "Bramhall", 
+                        "bramhall"
+                    ], 
+                    [
+                        "Braunstone", 
+                        "braunstone"
+                    ], 
+                    [
+                        "Brighton &amp; Hove", 
+                        "brighton"
+                    ], 
+                    [
+                        "Brockwell", 
+                        "Brockwell"
+                    ], 
+                    [
+                        "Bromley", 
+                        "bromley"
+                    ], 
+                    [
+                        "Brueton", 
+                        "brueton"
+                    ], 
+                    [
+                        "Bryn Bach", 
+                        "brynbach"
+                    ], 
+                    [
+                        "Burgess", 
+                        "burgess"
+                    ], 
+                    [
+                        "Burnage", 
+                        "burnage"
+                    ], 
+                    [
+                        "Burnley", 
+                        "burnley"
+                    ], 
+                    [
+                        "Bushy Park", 
+                        "bushy"
+                    ], 
+                    [
+                        "Cambridge", 
+                        "cambridge"
+                    ], 
+                    [
+                        "Camp Bastion", 
+                        "campbastion"
+                    ], 
+                    [
+                        "Camperdown", 
+                        "camperdown"
+                    ], 
+                    [
+                        "Cannon Hill", 
+                        "cannon-hill"
+                    ], 
+                    [
+                        "Cardiff", 
+                        "cardiff"
+                    ], 
+                    [
+                        "Carlisle", 
+                        "carlisle"
+                    ], 
+                    [
+                        "Chelmsford Central", 
+                        "chelmsfordcentral"
+                    ], 
+                    [
+                        "Citypark", 
+                        "citypark"
+                    ], 
+                    [
+                        "Colwick", 
+                        "colwick"
+                    ], 
+                    [
+                        "Concord", 
+                        "concord"
+                    ], 
+                    [
+                        "Congleton", 
+                        "congleton"
+                    ], 
+                    [
+                        "Conkers", 
+                        "conkers"
+                    ], 
+                    [
+                        "Coventry", 
+                        "coventry"
+                    ], 
+                    [
+                        "Crane Park", 
+                        "crane"
+                    ], 
+                    [
+                        "Crystal Palace", 
+                        "CrystalPalace"
+                    ], 
+                    [
+                        "Darlington South Park", 
+                        "darlingtonsouthpark"
+                    ], 
+                    [
+                        "Dewsbury", 
+                        "dewsbury"
+                    ], 
+                    [
+                        "Dulwich", 
+                        "dulwich"
+                    ], 
+                    [
+                        "Durham", 
+                        "durham"
+                    ], 
+                    [
+                        "Eastbourne", 
+                        "eastbourne"
+                    ], 
+                    [
+                        "Eastleigh", 
+                        "eastleigh"
+                    ], 
+                    [
+                        "Ecos", 
+                        "ecos"
+                    ], 
+                    [
+                        "Edinburgh", 
+                        "edinburgh"
+                    ], 
+                    [
+                        "Falkirk", 
+                        "falkirk"
+                    ], 
+                    [
+                        "Falls", 
+                        "falls"
+                    ], 
+                    [
+                        "Finsbury", 
+                        "finsbury"
+                    ], 
+                    [
+                        "Forest of Dean", 
+                        "forest-of-dean"
+                    ], 
+                    [
+                        "Frimley Lodge", 
+                        "FrimleyLodge"
+                    ], 
+                    [
+                        "Fritton Lake", 
+                        "frittonlake"
+                    ], 
+                    [
+                        "Gateshead", 
+                        "gateshead"
+                    ], 
+                    [
+                        "Gladstone", 
+                        "gladstone"
+                    ], 
+                    [
+                        "Glasgow", 
+                        "glasgow"
+                    ], 
+                    [
+                        "Gorleston Cliffs", 
+                        "gorleston"
+                    ], 
+                    [
+                        "Graves", 
+                        "graves"
+                    ], 
+                    [
+                        "Greenwich", 
+                        "greenwich"
+                    ], 
+                    [
+                        "Grovelands", 
+                        "grovelands"
+                    ], 
+                    [
+                        "Guildford", 
+                        "guildford"
+                    ], 
+                    [
+                        "Gunnersbury", 
+                        "gunnersbury"
+                    ], 
+                    [
+                        "Gunpowder", 
+                        "gunpowder"
+                    ], 
+                    [
+                        "Hackney Marshes", 
+                        "hackney-marshes"
+                    ], 
+                    [
+                        "Hampstead Heath", 
+                        "hampsteadHeath"
+                    ], 
+                    [
+                        "Hanley", 
+                        "hanley"
+                    ], 
+                    [
+                        "Harrogate", 
+                        "harrogate"
+                    ], 
+                    [
+                        "Harrow Lodge", 
+                        "harrowlodge"
+                    ], 
+                    [
+                        "Havant", 
+                        "havant"
+                    ], 
+                    [
+                        "Heaton", 
+                        "heaton"
+                    ], 
+                    [
+                        "Highbury Fields", 
+                        "highburyfields"
+                    ], 
+                    [
+                        "Hilly Fields", 
+                        "hillyfields"
+                    ], 
+                    [
+                        "Huddersfield", 
+                        "huddersfield"
+                    ], 
+                    [
+                        "Hull", 
+                        "hull"
+                    ], 
+                    [
+                        "Inverness", 
+                        "inverness"
+                    ], 
+                    [
+                        "Ipswich", 
+                        "ipswich"
+                    ], 
+                    [
+                        "Killerton", 
+                        "killerton"
+                    ], 
+                    [
+                        "Kings Lynn", 
+                        "KingsLynn"
+                    ], 
+                    [
+                        "Kingston", 
+                        "kingston"
+                    ], 
+                    [
+                        "Leamington", 
+                        "leamington"
+                    ], 
+                    [
+                        "Leeds", 
+                        "leeds"
+                    ], 
+                    [
+                        "Little Stoke", 
+                        "littlestoke"
+                    ], 
+                    [
+                        "Lloyd", 
+                        "Lloyd"
+                    ], 
+                    [
+                        "Mansfield", 
+                        "mansfield"
+                    ], 
+                    [
+                        "Marple", 
+                        "marple"
+                    ], 
+                    [
+                        "Medina I.O.W.", 
+                        "medina"
+                    ], 
+                    [
+                        "Mile End", 
+                        "mileend"
+                    ], 
+                    [
+                        "Milton Keynes", 
+                        "MiltonKeynes"
+                    ], 
+                    [
+                        "Netley Abbey", 
+                        "netleyabbey"
+                    ], 
+                    [
+                        "Newbury", 
+                        "newbury"
+                    ], 
+                    [
+                        "Newcastle", 
+                        "Newcastle"
+                    ], 
+                    [
+                        "Newport", 
+                        "Newport"
+                    ], 
+                    [
+                        "Nonsuch", 
+                        "nonsuch"
+                    ], 
+                    [
+                        "Northampton", 
+                        "northampton"
+                    ], 
+                    [
+                        "Norwich", 
+                        "norwich"
+                    ], 
+                    [
+                        "Oak Hill", 
+                        "oak-hill"
+                    ], 
+                    [
+                        "Old Deer Park", 
+                        "oldDeerPark"
+                    ], 
+                    [
+                        "Oldham", 
+                        "oldham"
+                    ], 
+                    [
+                        "Orpington", 
+                        "orpington"
+                    ], 
+                    [
+                        "Oxford", 
+                        "oxford"
+                    ], 
+                    [
+                        "Pennington Flash", 
+                        "PenningtonFlash"
+                    ], 
+                    [
+                        "Plymvalley", 
+                        "plymvalley"
+                    ], 
+                    [
+                        "Pontefract", 
+                        "pontefract"
+                    ], 
+                    [
+                        "Poole", 
+                        "poole"
+                    ], 
+                    [
+                        "Portrush", 
+                        "portrush"
+                    ], 
+                    [
+                        "Preston", 
+                        "preston"
+                    ], 
+                    [
+                        "Princes", 
+                        "princes"
+                    ], 
+                    [
+                        "Pymmes", 
+                        "pymmes"
+                    ], 
+                    [
+                        "Queen's", 
+                        "queens"
+                    ], 
+                    [
+                        "Reading", 
+                        "reading"
+                    ], 
+                    [
+                        "Redcar", 
+                        "redcar"
+                    ], 
+                    [
+                        "Richmond", 
+                        "richmond"
+                    ], 
+                    [
+                        "Riddlesdown", 
+                        "riddlesdown"
+                    ], 
+                    [
+                        "Riverside", 
+                        "riverside"
+                    ], 
+                    [
+                        "Roundhay", 
+                        "roundhay"
+                    ], 
+                    [
+                        "Roundshaw Downs", 
+                        "roundshaw"
+                    ], 
+                    [
+                        "Rushcliffe", 
+                        "rushcliffe"
+                    ], 
+                    [
+                        "Sedgefield", 
+                        "sedgefield"
+                    ], 
+                    [
+                        "Sewerby", 
+                        "sewerby"
+                    ], 
+                    [
+                        "Sheffield Hallam", 
+                        "SheffieldHallam"
+                    ], 
+                    [
+                        "Sheringham", 
+                        "sheringham"
+                    ], 
+                    [
+                        "South Manchester", 
+                        "southmanchester"
+                    ], 
+                    [
+                        "Southampton", 
+                        "southampton"
+                    ], 
+                    [
+                        "Southend", 
+                        "southend"
+                    ], 
+                    [
+                        "Southwick Country", 
+                        "southwickcountrypark"
+                    ], 
+                    [
+                        "St Albans", 
+                        "stalbans"
+                    ], 
+                    [
+                        "St Andrews", 
+                        "standrews"
+                    ], 
+                    [
+                        "Stewart", 
+                        "stewart"
+                    ], 
+                    [
+                        "Strathclyde", 
+                        "strathclyde"
+                    ], 
+                    [
+                        "Sunderland", 
+                        "sunderland"
+                    ], 
+                    [
+                        "Swindon", 
+                        "swindon"
+                    ], 
+                    [
+                        "Tees Barrage", 
+                        "teesbarrage"
+                    ], 
+                    [
+                        "Tilgate", 
+                        "tilgate"
+                    ], 
+                    [
+                        "Upton Court", 
+                        "uptoncourt"
+                    ], 
+                    [
+                        "Valentines", 
+                        "Valentines"
+                    ], 
+                    [
+                        "Walsall Arboretum", 
+                        "walsall"
+                    ], 
+                    [
+                        "Wanstead Flats", 
+                        "wansteadflats"
+                    ], 
+                    [
+                        "Waterworks", 
+                        "waterworks"
+                    ], 
+                    [
+                        "Whitley Bay", 
+                        "whitleybay"
+                    ], 
+                    [
+                        "Whitstable", 
+                        "Whitstable"
+                    ], 
+                    [
+                        "Wimbledon Common", 
+                        "wimbledon"
+                    ], 
+                    [
+                        "Wimpole Estate", 
+                        "wimpoleestate"
+                    ], 
+                    [
+                        "Woodbank", 
+                        "woodbank"
+                    ], 
+                    [
+                        "Woodley", 
+                        "woodley"
+                    ], 
+                    [
+                        "Worcester", 
+                        "worcester"
+                    ], 
+                    [
+                        "Wormwood Scrubs", 
+                        "wormwoodscrubs"
+                    ], 
+                    [
+                        "Worsley Woods", 
+                        "worsleywoods"
+                    ], 
+                    [
+                        "Wycombe Rye", 
+                        "wycomberye"
+                    ], 
+                    [
+                        "Wythenshawe", 
+                        "wythenshawe"
+                    ], 
+                    [
+                        "York", 
+                        "york"
+                    ]
+                ], 
+                "name": "event", 
+                "label": "Select your local parkrun"
+            }
+        ]
+    }, 
+    "description": "Provides a fresh barcode and up-to-date news and weather reports for your local parkrun."
 }

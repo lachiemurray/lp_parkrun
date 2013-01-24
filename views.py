@@ -106,11 +106,26 @@ def validate_config(request):
     
     json_response = { 'errors': [], 'valid': True }
 
-    # Check that barcode exists
+    # Extract config from POST
+    user_settings = json.loads(request.raw_post_data)['config']
     
+    # Check that user entered a barcode
+    if not user_settings.get('barcode', None):
+        json_response['valid'] = False
+        json_response['errors'].append('Please enter a barcode.')
+        
+    # Check that barcode is valid
+    
+    
+    # Check that user selected an event
+    if not user_settings.get('event', None):
+        json_response['valid'] = False
+        json_response['errors'].append('Please select an event from the select box.')
+
+    # Check that the event is valid
+     
     
     # Add/update user in database
-
 
     
     response = HttpResponse(json.dumps(json_response), mimetype='application/json')

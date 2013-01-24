@@ -105,7 +105,9 @@ Hello {{ user.first_name }}, here is your barcode for today's parkrun at {{ even
 </div>
 
 <!-- twitter -->
+{% if twitter %}
 <div class="twitter"></div>
+{% endif %}
 
 <!-- weather -->
 {% if weather %}

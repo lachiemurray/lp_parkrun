@@ -1,6 +1,8 @@
 from django.core.management.base import BaseCommand 
 from lp_parkrun.models import User, Event
 from lp_parkrun.scraper import Scraper
+from django.conf import settings  
+import json
 
 class Command(BaseCommand): 
     
@@ -11,21 +13,21 @@ class Command(BaseCommand):
         self.s = Scraper()
 
         # Scrape for new parkruns 
-        '''events = self.s.scrape_event_ids()
+        events = self.s.scrape_event_ids()
 
         for e in events:
             if not Event.objects.filter(identifier=e).exists():
                 self.add_event(self.s,e)
                 
-        # Update events
+        '''# Update events
         self.stdout.write('Updating parkruns...\n')
         for event in Event.objects.all():
-            self.update_event(event)'''
+            self.update_event(event)
             
         # Update users
         self.stdout.write('Updating users...\n')
         for u in User.objects.all():
-            self.update_user(u)
+            self.update_user(u)'''
         
         self.stdout.write('Done.\n')
         
@@ -52,7 +54,30 @@ class Command(BaseCommand):
         
         event.save()
         
-        # TODO: Add to meta.json
+        # Add event to meta.json
+        f = open(settings.STATIC_ROOT+'meta.json','r')
+        meta_data = json.load(f)
+        f.close()
+        
+        options = meta_data['config']['fields'][1]['options']
+        
+        item = [event.name,event.identifier]
+    
+        # If an item with this identifier is already in the list, overwrite it
+        if e in [x[1] for x in options]:
+            options = [item if x[1] == e else x for x in options]
+        
+        # Otherwise append a new item to the end of the list
+        else:
+            options.append([event.name, event.identifier])
+        
+        # Sort alphabetical
+        options.sort()
+        
+        f = open(settings.STATIC_ROOT+'meta.json','w')
+        json.dump(meta_data,f,indent=4)
+        f.close()
+        
     
     # Update the data of an existing parkrun
     def update_event(self,event):
@@ -72,6 +97,7 @@ class Command(BaseCommand):
             event.twitter = self.s.get_twitter_id(event.identifier) or ''
         
         event.save()
+        
         
     # Update the data of an existing user
     def update_user(self,user):
