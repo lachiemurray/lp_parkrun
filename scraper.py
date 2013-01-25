@@ -19,6 +19,7 @@ class Scraper():
         self.user_name_re = re.compile("(?=.*-)([a-zA-Z]+[a-zA-Z\-']*)")
         self.user_runs_re = re.compile('(?P<event_runs>[0-9]+).*at\s(?P<event>.*)<br\/>(?P<total_runs>[0-9]+)')
 
+
     # Scrape parkrun website and return a list of all parkrun events
     def scrape_event_ids(self):
         print 'Looking for new parkruns...'  
@@ -37,7 +38,8 @@ class Scraper():
         event_ids = self.event_id_re.findall(events_page)
       
         return event_ids
-            
+
+  
     # Scrape basic user data
     def scrape_user_data(self, barcode, event):
         print "Scraping user '%s'" % barcode
@@ -88,6 +90,7 @@ class Scraper():
             
             # Set to zero by default
             user_data['event_runs']=0
+            user_data['total_runs']=0
                 
             # Check if user has run at this event before
             if result.group('event').strip() != "All Events":
@@ -111,9 +114,8 @@ class Scraper():
                 user_data['pb'] = pb.second + 60 * pb.minute
         
         return user_data
-        
-        
-                
+
+          
     # Scrape basic event data
     def scrape_event_data(self, identifier):
         print "Scraping event '%s'" % identifier
@@ -141,7 +143,8 @@ class Scraper():
                 event_data['number'] = int(result.group(2))
         
         return event_data
-    
+
+
     # Try to find an event's postcode   
     def get_event_postcode(self,identifier):
         print "Getting postcode '%s'" % identifier
@@ -159,7 +162,8 @@ class Scraper():
 
         if postcode:
             return postcode[0]
-     
+
+
     # Try to work out an event's twitter id   
     def get_twitter_id(self,identifier):
         print "Getting twitter id '%s'" % identifier
@@ -180,4 +184,45 @@ class Scraper():
             
             if result.getcode() == 200:
                 return username
+    
+    @staticmethod    
+    def is_barcode_valid(barcode):
+        
+        request = urllib2.Request("http://www.parkrun.org.uk/results/athleteresultshistory/?athleteNumber="+str(barcode))
+        request.add_header("User-Agent","Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11")
+        
+        # Check if event page exists
+        try:
+            f = urllib2.urlopen(request)
+        except urllib2.HTTPError as detail:
+            print "Error opening URL %s: %s" % (request.get_full_url(), detail)
+            return False
+        
+        # Isolate the most important section of the page    
+        result = f.read().split('h2')   
+        
+        if result:
+            user = result[1]
+        else:
+            return False
+        
+        if re.search('([0-9]+\sparkruns)', user):
+            return True
+        else:
+            return False
+    
+    @staticmethod    
+    def is_event_valid(event):
+        
+        request = urllib2.Request("http://www.parkrun.org.uk/"+event)
+        request.add_header("User-Agent","Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11")
+        
+        # Check if event page exists
+        try:
+            urllib2.urlopen(request)
+        except urllib2.HTTPError as detail:
+            print "Error opening URL %s: %s" % (request.get_full_url(), detail)
+            return False
+        
+        return True
             

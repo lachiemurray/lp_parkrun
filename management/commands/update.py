@@ -19,7 +19,7 @@ class Command(BaseCommand):
             if not Event.objects.filter(identifier=e).exists():
                 self.add_event(self.s,e)
                 
-        '''# Update events
+        # Update events
         self.stdout.write('Updating parkruns...\n')
         for event in Event.objects.all():
             self.update_event(event)
@@ -27,7 +27,7 @@ class Command(BaseCommand):
         # Update users
         self.stdout.write('Updating users...\n')
         for u in User.objects.all():
-            self.update_user(u)'''
+            self.update_user(u)
         
         self.stdout.write('Done.\n')
         
@@ -69,7 +69,7 @@ class Command(BaseCommand):
         
         # Otherwise append a new item to the end of the list
         else:
-            options.append([event.name, event.identifier])
+            options.append(item)
         
         # Sort alphabetical
         options.sort()
@@ -104,14 +104,9 @@ class Command(BaseCommand):
         
         data = self.s.scrape_user_data(user.barcode,user.event_id)
         
-        if data.has_key('total_runs'):
-            user.total_runs = data['total_runs']
-            
-        if data.has_key('event_runs'):
-            user.event_runs = data['event_runs']
-         
-        if data.has_key('pb'):
-            user.pb = data['pb']
+        user.total_runs = data.get('total_runs',user.total_runs)
+        user.event_runs = data.get('total_runs',user.event_runs)
+        user.pb = data.get('pb',user.pb)
         
         user.save()
 

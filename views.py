@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
+from lp_parkrun.scraper import Scraper
 from models import User, Event
 from weather import Weather
 import datetime
@@ -105,28 +106,70 @@ def sample(request):
 def validate_config(request):
     
     json_response = { 'errors': [], 'valid': True }
+    scraper = Scraper()
 
     # Extract config from POST
     user_settings = json.loads(request.raw_post_data)['config']
+    barcode = user_settings.get('barcode', None)
+    event = user_settings.get('event', None)
+    print event
     
-    # Check that user entered a barcode
-    if not user_settings.get('barcode', None):
+    # Check that the user entered a barcode
+    if barcode:
+        
+        # Check that the barcode represents an integer
+        try:
+            barcode = int(barcode.strip('A'))       
+        except:
+            json_response['valid'] = False
+            json_response['errors'].append('Your barcode should only contain numbers')
+        
+        if type(barcode) is int:
+            
+            # Check that the barcode is recognised
+            if not Scraper.is_barcode_valid(barcode):
+                json_response['valid'] = False        
+                json_response['errors'].append('The barcode you entered was not recognised')
+    
+    else:
         json_response['valid'] = False
         json_response['errors'].append('Please enter a barcode.')
-        
-    # Check that barcode is valid
     
-    
-    # Check that user selected an event
-    if not user_settings.get('event', None):
+    # Check that the user selected an event
+    if event:
+#       # Check that the event is valid - should only fail here if the parkrun 
+        # website is down, or the event names in meta.json are out of date
+        if not Scraper.is_event_valid(event):
+            json_response['valid'] = False
+            json_response['errors'].append('The event you selected was not recognised, please select another event or try again later')
+                
+    else:
         json_response['valid'] = False
-        json_response['errors'].append('Please select an event from the select box.')
-
-    # Check that the event is valid
-     
-    
+        json_response['errors'].append('Please select an event from the select box')
+        
     # Add/update user in database
+    if json_response['valid']:
+        
+        # Update an existing, or create a new user
+        if User.objects.filter(barcode=barcode).exists():
+            user = User.objects.get(barcode=barcode)
+        else:
+            user = User(barcode=barcode)
+    
+        user.event_id = event
+        data = scraper.scrape_user_data(barcode, event)
+        
+        user.first_names = data['first_names']
+        user.last_names = data['last_names']
+        user.event_runs = data.get('event_runs',0)
+        user.total_runs = data.get('total_runs',0)
+        user.pb = data.get('pb',0)
 
+        if len(user.first_names) and len(user.last_names):
+            user.save()
+        else:
+            json_response['valid'] = False
+            json_response['errors'].append('There was a problem retrieving your information. Please try again later')      
     
     response = HttpResponse(json.dumps(json_response), mimetype='application/json')
 
