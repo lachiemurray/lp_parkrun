@@ -1,0 +1,121 @@
+body 
+{
+    width: 384px;
+    padding: 0px;
+    margin: 0px;
+    font-family: arial, sans-serif;
+    word-wrap: break-word;
+    border-bottom: 5px solid;
+}
+     
+div#cutout
+{
+    border-top: 2px dashed;
+    border-bottom: 2px dashed;	
+    margin: 10px auto 10px auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+    
+table#barcode
+{
+    margin: 0px auto 0px auto;
+}
+    
+div.header
+{
+    border-top: 5px solid;
+    border-bottom: 5px solid;
+    text-align:center;
+    padding: 5px;
+}   
+
+div.header_left
+{
+    position: relative;
+    float: left;
+    text-align: left;
+    font-weight: bold;
+    height: 85px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+    
+div.header_right
+{
+    position: relative;
+    float: right;
+    text-align: right;
+    font-weight: bold;
+    width: 50%;
+    height: 85px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+div.event_name
+{
+    text-align: right;
+    margin-top: -5px;
+    padding-right: 0px;
+    font-size: 18px;
+}
+
+div.text
+{
+    padding: 10px;
+    text-align: justify;
+    font-size: 18px;
+    
+}
+
+#event_number
+{  
+    font-size: 32px;
+    position:absolute; top:0px; right: 0px;
+}
+
+#date
+{  
+    font-size: 22px;
+    position:absolute; bottom:0px; right: 0px;
+}
+
+.forecast 
+{
+    font-size:16px;
+    float:left;
+    margin-top:20px;
+    margin-bottom:10px;
+    padding-right:10px;
+    width:304px;
+    text-align:justify;
+}
+
+#icon 
+{
+    margin-bottom: -13px;
+    float:left;
+    margin-right:15px;
+}
+
+#weather-icon 
+{
+    margin-top:5px;
+}
+
+#weather-container 
+{
+    background:url(/static/grey_bar.png) no-repeat;
+    padding-top:5px;
+    min-height:50px;
+    overflow: hidden;
+}
+
+.grey-strip 
+{
+    background:url(/static/grey_bar.png) no-repeat;
+    height:15px;
+    width:384px;
+}
+

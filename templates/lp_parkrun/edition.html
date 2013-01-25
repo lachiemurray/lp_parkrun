@@ -3,88 +3,9 @@
 <html>
 <head>
   <title>parkrun</title>
-  <style type="text/css">
-    body 
-    {
-      width: 384px;
-      padding: 0px;
-      margin: 0px;
-      font-family: arial, sans-serif;
-    }
-    
-    h1 
-    {
-      word-wrap: break-word;
-    }
-    
-    div.cutout
-    {
-       border-top: 2px dashed;
-       border-bottom: 2px dashed;	
-       margin: 10px auto 10px auto;
-       padding-top: 10px;
-       padding-bottom: 10px;
-    }
-    
-    table.barcode
-    {
-       margin: 0px auto 0px auto;
-    }
-    
-    div.header
-    {
-       border-top: 5px solid;
-       border-bottom: 2px solid;
-       text-align:center;
-       padding: 10px;
-    }   
-    div.header_left
-    {
-       position: relative;
-       float: left;
-       text-align: left;
-       font-weight: bold;
-       height: 85px;
-       margin-left: 5px;
-       margin-right: 5px;
-    }
-    div.header_right
-    {
-       position: relative;
-       float: right;
-       text-align: right;
-       font-weight: bold;
-       width: 50%;
-       height: 85px;
-       margin-left: 5px;
-       margin-right: 5px;
-    }
-    div.event_name
-    {
-       text-align: right;
-       margin-top: -5px;
-       padding-right: 0px;
-       font-size: 18px;
-    }
-    div.summary
-    {
-       padding: 10px;
-       text-align: justify;
-    }
-    #event_number
-    {  
-       font-size: 32px;
-       position:absolute; top:0px; right: 0px;
-    }
-    #date
-    {  
-       font-size: 22px;
-       position:absolute; bottom:0px; right: 0px;
-    }
-  </style>
+  <link href="/static/parkrun.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-
 
 <!-- header -->
 <div class="header">
@@ -99,25 +20,36 @@
     <div style="clear:both;"></div>
 </div>
 
+
+<div class='grey-strip'></div>
+
 <!-- summary -->
-<div class="summary">
+<div class="text">
 Hello {{ user.first_name }}, here is your barcode for today's parkrun at {{ event.long_name }}. This will be your {{ user.event_runs|ordinal }} run at {{ event.short_name }} and your {{ user.total_runs|ordinal }} overall. Good luck!
 </div>
 
 <!-- twitter -->
 {% if twitter %}
-<div class="twitter"></div>
+<div id='weather-container'>
+  <div id='icon'><img src="/static/icon.png"></div>
+  <div class="forecast"><b>@{{ twitter.id }}</b> <i>{{ twitter.text }}</i></div>
+</div>
 {% endif %}
 
 <!-- weather -->
 {% if weather %}
-{% include "lp_parkrun/weather.html" with weather=weather %}
+<div id='weather-container'>
+  <div id='icon'><img src="/static/weather_icons/{{ weather.icon }}.png"></div>
+  <div class="forecast"> {{ weather.text|upper }} &bull; {{ weather.temp }}&deg;C</div>
+</div>
 {% endif %}
 
+<div class='grey-strip'></div>
+
 <!-- barcode -->
-<div class="cutout">
+<div id="cutout">
 barcode
-<!--table class="barcode" cellpadding="0px" cellspacing="0px">
+<!--table id="barcode" cellpadding="0px" cellspacing="0px">
   <tbody><tr>
     <td colspan="3"><img src="https://service.parkrun.org.uk/resources/runnerSupport/top.gif"></td>
   </tr>
@@ -138,6 +70,9 @@ barcode
 </div>
 
 <!-- footer image -->
+
+
+<div class='grey-strip'></div>
 
 </body>
 </html>
