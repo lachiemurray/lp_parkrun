@@ -112,13 +112,13 @@ def validate_config(request):
     user_settings = json.loads(request.raw_post_data)['config']
     barcode = user_settings.get('barcode', None)
     event = user_settings.get('event', None)
-    print event
     
     # Check that the user entered a barcode
     if barcode:
         
         # Check that the barcode represents an integer
         try:
+            # If necessary, remove leading 'A'
             barcode = int(barcode.strip('A'))       
         except:
             json_response['valid'] = False
@@ -150,17 +150,15 @@ def validate_config(request):
     # Add/update user in database
     if json_response['valid']:
         
-        # Update an existing, or create a new user
-        if User.objects.filter(barcode=barcode).exists():
-            user = User.objects.get(barcode=barcode)
-        else:
-            user = User(barcode=barcode)
-    
+        # Update an existing user or create a new one
+        user = User.objects.get_or_create(barcode=barcode)
         user.event_id = event
+        
+        # Get user data
         data = scraper.scrape_user_data(barcode, event)
         
-        user.first_names = data['first_names']
-        user.last_names = data['last_names']
+        user.first_names = data.get('first_names','')
+        user.last_names = data.get('last_names','')
         user.event_runs = data.get('event_runs',0)
         user.total_runs = data.get('total_runs',0)
         user.pb = data.get('pb',0)
