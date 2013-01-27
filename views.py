@@ -17,13 +17,16 @@ def edition(request):
     code = request.GET['barcode']
     user = get_object_or_404(User, barcode=code)
     event = get_object_or_404(Event, identifier=user.event_id)
+    
+    # Get barcode url    
+    barcode_url = "https://service.parkrun.org.uk/runnerSupport/BarcodeImagery/image.php?code=A"+code
 
     ### User data ###
-    user_data = { 'first_name' : user.first_names.split()[0], 
-                  'full_name'  : user.first_names+user.last_names.upper(), 
-                  'event_runs' : user.event_runs+1, 
-                  'total_runs' : user.total_runs+1, 
-                  'barcode'    : user.barcode }
+    user_data = { 'first_name'  : user.first_names.split()[0], 
+                  'full_name'   : user.first_names+user.last_names.upper(), 
+                  'event_runs'  : user.event_runs+1, 
+                  'total_runs'  : user.total_runs+1, 
+                  'barcode_url' : barcode_url }
 
     ### Event data ###
     
@@ -50,9 +53,10 @@ def edition(request):
         weather = Weather(event.postcode.split()[0])
         weather.get_weather()
         
-        weather_data = { 'icon' : weather.icon, 
-                         'text' : weather.forecast_string, 
-                         'temp' : weather.temperature }
+        weather_data = { 'icon'     : weather.icon,
+         	                'postcode' : event.postcode,
+                         'text'     : weather.forecast_string, 
+                         'temp'     : weather.temperature }
         
         context['weather'] = weather_data
 
@@ -72,20 +76,21 @@ def edition(request):
 def sample(request):
     
     # Sample data
-    user_data = { 'first_name' : 'Paul', 
-                  'full_name'  : 'Paul SINTON-HEWITT', 
-                  'event_runs' : 29, 
-                  'total_runs' : 65, 
-                  'barcode'    : 'SAMPLE' }
+    user_data = { 'first_name'  : 'Paul', 
+                  'full_name'   : 'Paul SINTON-HEWITT', 
+                  'event_runs'  : 29, 
+                  'total_runs'  : 65, 
+                  'barcode_url' : '/static/barcode_images/sample.gif' }
     
     event_data = { 'short_name' : 'Bushy Park', 
                    'long_name'  : 'Bushy Park',
                    'date'       : '28/07/2012', 
                    'number'     : 421 }
     
-    weather_data = { 'icon' : 'sunny', 
-                     'text' : 'clear blue skies', 
-                     'temp' : 18 }
+    weather_data = { 'icon'     : 'sunny', 
+                     'postcode' : 'TW11 0EQ', 
+                     'text'     : 'clear blue skies', 
+                     'temp'     : 18 }
     
     twitter_data = { 'id'   : 'bushyparkrun', 
                      'text' : '''Don't forget that we're not running today. Why 
