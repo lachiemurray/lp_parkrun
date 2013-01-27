@@ -11,7 +11,7 @@
             {
                 "type": "text", 
                 "name": "barcode", 
-                "label": "Enter your barcode number"
+                "label": "Enter your athlete ID"
             }, 
             {
                 "type": "select", 

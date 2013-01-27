@@ -10,14 +10,13 @@
 <!-- header -->
 <div class="header">
     <div class="header_left">
-        <img src="/static/parkrun_logo.jpg" width="150px"></img>
+        <img src="/static/parkrun_logo.png" width="150px"></img>
         <div id="event_name">{{event.short_name|lower}}</div>
     </div>
     <div class="header_right">
         <span id="event_number">#{{event.number}}</span>
         <span id="date">{{event.date}}</span>
     </div>
-    <div style="clear:both;"></div>
 </div>
 
 
@@ -44,7 +43,7 @@ Hello {{ user.first_name }}, here is your weekly update for today's parkrun at {
 <div class='grey-strip'></div>
 <table>
 <tr>
-<td class="icon"><img src="/static/icon.png"></img></td>
+<td class="icon"><img src="/static/twitter_logo.png"></img></td>
 <td class="text"> <b>@{{ twitter.id }}</b><br/><i>{{ twitter.text }}</i></td>
 </tr>
 </table>

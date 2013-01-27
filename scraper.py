@@ -8,9 +8,7 @@ class Scraper():
         
         self.user_agent = "Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11"
         
-        # Compile regexs
-        self.unwanted_chars = re.compile("[aeiou-]")
-        
+        # Compile regexs       
         self.event_re = re.compile("<h2>([a-zA-Z\s\.\-&;']*)parkrun.*#\s*([0-9]+)")
         self.postcode_re = re.compile('([A-PR-UWYZ0-9][A-HK-Y0-9][AEHMNPRTVXY0-9]?[ABEHMNPRVWXY0-9]? {1,2}[0-9][ABD-HJLN-UW-Z]{2}|GIR 0AA)')
         self.event_id_re = re.compile('<a href="http:\/\/www.parkrun.org.uk\/([a-zA-Z\-]*)\/results">')
