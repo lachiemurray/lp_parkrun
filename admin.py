@@ -3,7 +3,7 @@ from lp_parkrun.models import User, Event
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('first_names', 'last_names', 'barcode')
+    list_display = ('first_names', 'last_names', 'athlete_id')
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('name', 'identifier', 'number','has_twitter_id', 'has_postcode')

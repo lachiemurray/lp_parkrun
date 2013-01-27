@@ -10,7 +10,7 @@
         "fields": [
             {
                 "type": "text", 
-                "name": "barcode", 
+                "name": "athlete_id", 
                 "label": "Enter your athlete ID"
             }, 
             {

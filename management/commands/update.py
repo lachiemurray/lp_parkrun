@@ -54,6 +54,8 @@ class Command(BaseCommand):
         
         event.save()
         
+        print "New event '%s' added!" % event.name
+        
         # Add event to meta.json
         f = open(settings.STATIC_ROOT+'meta.json','r')
         meta_data = json.load(f)
@@ -102,7 +104,7 @@ class Command(BaseCommand):
     # Update the data of an existing user
     def update_user(self,user):
         
-        data = self.s.scrape_user_data(user.barcode,user.event_id)
+        data = self.s.scrape_user_data(user.athlete_id,user.event_id)
         
         user.total_runs = data.get('total_runs',user.total_runs)
         user.event_runs = data.get('total_runs',user.event_runs)

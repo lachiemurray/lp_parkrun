@@ -10,20 +10,20 @@ import json
 
 def edition(request):
 
-    if not request.GET.get('barcode', False):
-        return HttpResponse("No barcode was provided", status=400)
+    if not request.GET.get('athlete_id', False):
+        return HttpResponse("No athlete ID was provided", status=400)
     
     # Get user and event
-    code = request.GET['barcode']
-    user = get_object_or_404(User, barcode=code)
+    athlete_id = request.GET['athlete_id']
+    user = get_object_or_404(User, athlete_id=athlete_id)
     event = get_object_or_404(Event, identifier=user.event_id)
     
     # Get barcode url    
-    barcode_url = "https://service.parkrun.org.uk/runnerSupport/BarcodeImagery/image.php?code=A"+code
+    barcode_url = "https://service.parkrun.org.uk/runnerSupport/BarcodeImagery/image.php?code=A"+athlete_id
 
     ### User data ###
     user_data = { 'first_name'  : user.first_names.split()[0], 
-                  'full_name'   : user.first_names+user.last_names.upper(), 
+                  'full_name'   : user.first_names+" "+user.last_names.upper(), 
                   'event_runs'  : user.event_runs+1, 
                   'total_runs'  : user.total_runs+1, 
                   'barcode_url' : barcode_url }
@@ -68,7 +68,7 @@ def edition(request):
     response = render(request, 'lp_parkrun/edition.html', context)
 
     # Create ETag
-    response['ETag'] = hashlib.sha224(str(user.barcode)+date).hexdigest()
+    response['ETag'] = hashlib.sha224(str(user.athlete_id)+date).hexdigest()
     
     return response
 
@@ -115,30 +115,30 @@ def validate_config(request):
 
     # Extract config from POST
     user_settings = json.loads(request.raw_post_data)['config']
-    barcode = user_settings.get('barcode', None)
+    athlete_id = user_settings.get('athlete_id', None)
     event = user_settings.get('event', None)
     
     # Check that the user entered a barcode
-    if barcode:
+    if athlete_id:
         
         # Check that the barcode represents an integer
         try:
             # If necessary, remove leading 'A'
-            barcode = int(barcode.strip('A'))       
+            athlete_id = int(athlete_id.strip('A'))       
         except:
             json_response['valid'] = False
-            json_response['errors'].append('Your barcode should only contain numbers')
+            json_response['errors'].append('Your athlete ID should only contain numbers')
         
-        if type(barcode) is int:
+        if type(athlete_id) is int:
             
-            # Check that the barcode is recognised
-            if not Scraper.is_barcode_valid(barcode):
+            # Check that the athlete_id is recognised
+            if not Scraper.is_athlete_id_valid(athlete_id):
                 json_response['valid'] = False        
-                json_response['errors'].append('The barcode you entered was not recognised')
+                json_response['errors'].append('The athlete ID you entered was not recognised')
     
     else:
         json_response['valid'] = False
-        json_response['errors'].append('Please enter a barcode.')
+        json_response['errors'].append('Please enter an athlete ID.')
     
     # Check that the user selected an event
     if event:
@@ -156,11 +156,11 @@ def validate_config(request):
     if json_response['valid']:
         
         # Update an existing user or create a new one
-        user = User.objects.get_or_create(barcode=barcode)
+        user, created = User.objects.get_or_create(athlete_id=athlete_id,event_runs=0,total_runs=0,pb=0)
         user.event_id = event
         
         # Get user data
-        data = scraper.scrape_user_data(barcode, event)
+        data = scraper.scrape_user_data(athlete_id, event)
         
         user.first_names = data.get('first_names','')
         user.last_names = data.get('last_names','')

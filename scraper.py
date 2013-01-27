@@ -39,13 +39,13 @@ class Scraper():
 
   
     # Scrape basic user data
-    def scrape_user_data(self, barcode, event):
-        print "Scraping user '%s'" % barcode
+    def scrape_user_data(self, athlete_id, event):
+        #print "Scraping user '%s'" % athlete_id
         
         # Dictionary for storing data
         user_data = dict()
         
-        request = urllib2.Request("http://www.parkrun.org.uk/"+event+"/results/athletehistory/?athleteNumber="+str(barcode))
+        request = urllib2.Request("http://www.parkrun.org.uk/"+event+"/results/athletehistory/?athleteNumber="+str(athlete_id))
         request.add_header("User-Agent",self.user_agent)
         
         try:
@@ -62,6 +62,7 @@ class Scraper():
         if result:
             user = result[1]
         
+        print user
         
         ### Scrape names ###
         result = self.user_name_re.findall(user)
@@ -116,7 +117,7 @@ class Scraper():
           
     # Scrape basic event data
     def scrape_event_data(self, identifier):
-        print "Scraping event '%s'" % identifier
+        #print "Scraping event '%s'" % identifier
         
         # Create dictionary for storing data
         event_data = dict()
@@ -145,7 +146,7 @@ class Scraper():
 
     # Try to find an event's postcode   
     def get_event_postcode(self,identifier):
-        print "Getting postcode '%s'" % identifier
+        #print "Getting postcode '%s'" % identifier
 
         request = urllib2.Request("http://www.parkrun.org.uk/"+identifier+"/course/")
         request.add_header("User-Agent",self.user_agent)
@@ -159,12 +160,13 @@ class Scraper():
         postcode = self.postcode_re.findall(f.read())
 
         if postcode:
+            print "postcode found! '%s' (%s)" % (postcode[0],identifier)
             return postcode[0]
 
 
     # Try to work out an event's twitter id   
     def get_twitter_id(self,identifier):
-        print "Getting twitter id '%s'" % identifier
+        #print "Getting twitter id '%s'" % identifier
     
         username = identifier+'parkrun'
         
@@ -181,12 +183,13 @@ class Scraper():
                 return
             
             if result.getcode() == 200:
+                print "twitter id found! '%s'" % username
                 return username
     
     @staticmethod    
-    def is_barcode_valid(barcode):
+    def is_athlete_id_valid(athlete_id):
         
-        request = urllib2.Request("http://www.parkrun.org.uk/results/athleteresultshistory/?athleteNumber="+str(barcode))
+        request = urllib2.Request("http://www.parkrun.org.uk/results/athleteresultshistory/?athleteNumber="+str(athlete_id))
         request.add_header("User-Agent","Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11")
         
         # Check if event page exists
