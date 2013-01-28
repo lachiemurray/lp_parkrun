@@ -10,7 +10,7 @@ body
 
 div.grey-strip 
 {
-    background:url(/static/grey_bar.png) no-repeat;
+    background:url(/static/lp_parkrun/grey_bar.png) no-repeat;
     height:15px;
     width:384px;
 }
