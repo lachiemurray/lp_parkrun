@@ -182,10 +182,10 @@ def validate_config(request):
 # Alternatively, configure webserver to serve this content
 def meta_json(request):
     
-    return HttpResponseRedirect('/static/meta.json')
+    return HttpResponseRedirect('/static/lp_parkrun/meta.json')
 
 # Alternatively, configure webserver to serve this content
 def icon(request):
     
-    return HttpResponseRedirect('/static/icon.png')
+    return HttpResponseRedirect('/static/lp_parkrun/icon.png')
     
