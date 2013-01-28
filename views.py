@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
 from lp_parkrun.scraper import Scraper
+from django.conf import settings
 from models import User, Event
 from weather import Weather
 import datetime
@@ -43,8 +44,9 @@ def edition(request):
                    'number'     : event.number+1 }
 
     # Create minimal context
-    context = { 'user'    : user_data,
-                'event'   : event_data }
+    context = { 'user'     : user_data,
+                'event'    : event_data,
+                'root_url' : settings.ROOT_URL }
 
     ### Weather data ###
     if event.postcode:
@@ -100,7 +102,8 @@ def sample(request):
     context = { 'user'    : user_data,
                 'event'   : event_data,
                 'weather' : weather_data,
-                'twitter' : twitter_data }
+                'twitter' : twitter_data,
+                'root_url' : settings.ROOT_URL }
         
     # Create response
     response = render(request, 'lp_parkrun/edition.html', context)
