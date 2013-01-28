@@ -80,7 +80,7 @@ def sample(request):
                   'full_name'   : 'Paul SINTON-HEWITT', 
                   'event_runs'  : 29, 
                   'total_runs'  : 65, 
-                  'barcode_url' : '/static/barcode_images/sample.gif' }
+                  'barcode_url' : '/static/lp_parkrun/barcode_images/sample.gif' }
     
     event_data = { 'short_name' : 'Bushy Park', 
                    'long_name'  : 'Bushy Park',

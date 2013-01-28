@@ -57,7 +57,7 @@ class Command(BaseCommand):
         print "New event '%s' added!" % event.name
         
         # Add event to meta.json
-        f = open(settings.STATIC_ROOT+'meta.json','r')
+        f = open(settings.STATIC_ROOT+'lp_parkrun/meta.json','r')
         meta_data = json.load(f)
         f.close()
         
@@ -76,7 +76,7 @@ class Command(BaseCommand):
         # Sort alphabetical
         options.sort()
         
-        f = open(settings.STATIC_ROOT+'meta.json','w')
+        f = open(settings.STATIC_ROOT+'lp_parkrun/meta.json','w')
         json.dump(meta_data,f,indent=4)
         f.close()
         
