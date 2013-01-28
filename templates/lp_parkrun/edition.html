@@ -3,14 +3,14 @@
 <html>
 <head>
   <title>parkrun</title>
-  <link href="/static/parkrun.css" rel="stylesheet" type="text/css">
+  <link href="{{root_url}}/static/lp_parkrun/parkrun.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
 <!-- header -->
 <div class="header">
     <div class="header_left">
-        <img src="/static/parkrun_logo.png" width="150px"></img>
+        <img src="/static/lp_parkrun/parkrun_logo.png" width="150px"></img>
         <div id="event_name">{{event.short_name|lower}}</div>
     </div>
     <div class="header_right">
@@ -32,7 +32,7 @@ Hello {{ user.first_name }}, here is your weekly update for today's parkrun at {
 <div class='grey-strip'></div>
 <table>
 <tr>
-<td class="icon"><img src="/static/weather_icons/{{ weather.icon }}.png"></img></td>
+<td class="icon"><img src="/static/lp_parkrun/weather_icons/{{ weather.icon }}.png"></img></td>
 <td class="text"><b>{{event.long_name}}, {{weather.postcode}}</b><br/>{{ weather.text|upper }} &bull; {{ weather.temp }}&deg;C</td>
 </tr>
 </table>
@@ -43,7 +43,7 @@ Hello {{ user.first_name }}, here is your weekly update for today's parkrun at {
 <div class='grey-strip'></div>
 <table>
 <tr>
-<td class="icon"><img src="/static/twitter_logo.png"></img></td>
+<td class="icon"><img src="/static/lp_parkrun/twitter_logo.png"></img></td>
 <td class="text"> <b>@{{ twitter.id }}</b><br/><i>{{ twitter.text }}</i></td>
 </tr>
 </table>
@@ -55,19 +55,19 @@ Hello {{ user.first_name }}, here is your weekly update for today's parkrun at {
 <div id="cutout">
 <table id="barcode" cellpadding="0px" cellspacing="0px">
   <tbody><tr>
-    <td colspan="3"><img src="/static/barcode_images/top.gif"></td>
+    <td colspan="3"><img src="/static/lp_parkrunbarcode_images/top.gif"></td>
   </tr>
   <tr>
-    <td><img src="/static/barcode_images/side.gif"></td>
+    <td><img src="/static/lp_parkrun/barcode_images/side.gif"></td>
     <td width="300px" align="center" valign="middle">
-      <img src="/static/barcode_images/parkrun-logo.gif" alt="parkrun"><br>
+      <img class="dither" src="/static/lp_parkrun/barcode_images/parkrun-logo.gif" alt="parkrun"><br>
       <img src="{{ user.barcode_url }}" alt="Your barcode"><br>
       <strong> {{ user.full_name }}</strong>
     </td>
-    <td><img src="/static/barcode_images/side.gif"></td>
+    <td><img src="/static/lp_parkrun/barcode_images/side.gif"></td>
   </tr>
   <tr>
-    <td colspan="3"><img src="/static/barcode_images/bottom.gif"></td>
+    <td colspan="3"><img src="/static/lp_parkrun/barcode_images/bottom.gif"></td>
   </tr>
 </tbody>
 </table>
