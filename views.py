@@ -45,8 +45,11 @@ def edition(request):
 
     # Create minimal context
     context = { 'user'     : user_data,
-                'event'    : event_data,
-                'root_url' : settings.ROOT_URL }
+                'event'    : event_data }
+    
+    # Only add root_url if it has been defined
+    if hasattr( settings, 'ROOT_URL' ):
+        context['root_url'] = settings.ROOT_URL
 
     ### Weather data ###
     if event.postcode:
@@ -56,7 +59,7 @@ def edition(request):
         weather.get_weather()
         
         weather_data = { 'icon'     : weather.icon,
-         	                'postcode' : event.postcode,
+                         'postcode' : event.postcode,
                          'text'     : weather.forecast_string, 
                          'temp'     : weather.temperature }
         
@@ -79,7 +82,7 @@ def sample(request):
     
     # Sample data
     user_data = { 'first_name'  : 'Paul', 
-                  'full_name'   : 'Paul SINTON-HEWITT', 
+                  'full_name'   : 'Paul SAMPLE-RUNNER', 
                   'event_runs'  : 29, 
                   'total_runs'  : 65, 
                   'barcode_url' : '/static/lp_parkrun/barcode_images/sample.gif' }
@@ -102,8 +105,11 @@ def sample(request):
     context = { 'user'    : user_data,
                 'event'   : event_data,
                 'weather' : weather_data,
-                'twitter' : twitter_data,
-                'root_url' : settings.ROOT_URL }
+                'twitter' : twitter_data }
+    
+    # Only add root_url if it has been defined
+    if hasattr( settings, 'ROOT_URL' ):
+        context['root_url'] = settings.ROOT_URL
         
     # Create response
     response = render(request, 'lp_parkrun/edition.html', context)
