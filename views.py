@@ -123,7 +123,7 @@ def validate_config(request):
     scraper = Scraper()
 
     # Extract config from POST
-    user_settings = json.loads(request.raw_post_data)['config']
+    user_settings = json.loads(request.POST['config'])
     athlete_id = user_settings.get('athlete_id', None)
     event = user_settings.get('event', None)
     
@@ -165,7 +165,7 @@ def validate_config(request):
     if json_response['valid']:
         
         # Update an existing user or create a new one
-        user, created = User.objects.get_or_create(athlete_id=athlete_id,event_runs=0,total_runs=0,pb=0)
+        user, created = User.objects.get_or_create(athlete_id=athlete_id)
         user.event_id = event
         
         # Get user data
@@ -179,6 +179,11 @@ def validate_config(request):
 
         if len(user.first_names) and len(user.last_names):
             user.save()
+            
+            if created:
+                print "New user added: '%s'" % user.first_names+' '+user.last_names
+            else:
+                print "User updated: '%s'" % user.first_names+' '+user.last_names
         else:
             json_response['valid'] = False
             json_response['errors'].append('There was a problem retrieving your information. Please try again later')      

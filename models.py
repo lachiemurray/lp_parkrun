@@ -6,12 +6,12 @@ class User(models.Model):
     first_names = models.CharField(max_length=100)
     last_names = models.CharField(max_length=100)
     athlete_id = models.IntegerField()
-    total_runs = models.IntegerField()
+    total_runs = models.IntegerField(default=0)
     
     # Event specific details
     pb = models.IntegerField(default=0)
     event_id = models.CharField(max_length=100)
-    event_runs = models.IntegerField()
+    event_runs = models.IntegerField(default=0)
     
     def __unicode__(self):
         return self.first_names+" "+self.last_names
